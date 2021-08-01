@@ -55,7 +55,9 @@
                     } d-inline-flex gap-4 fw-bold shadow-sm hover-orange border-radius-md p-3`"
                   >
                     <p class="my-auto ms-2">{{ optionsChars[i] }}</p>
-                    <p class="my-auto">{{ option.name }}</p>
+                    <p class="my-auto">
+                      {{ option.name }} {{ ` ${option.correct}` }}
+                    </p>
                     <span
                       v-if="state.selectedAnswerIndex !== -1"
                       class="flex-grow-1 d-flex flex-row-reverse"
@@ -85,7 +87,7 @@
                   Next
                 </button>
                 <button
-                  v-if="state.completed === -1"
+                  v-if="state.showResultButton"
                   class="btn btn-warning fw-bold border-radius-md"
                   @click="showResult()"
                 >
@@ -149,27 +151,21 @@
 </template>
 
 <script>
-import { ref, reactive, onMounted } from 'vue';
+import { reactive, onMounted } from 'vue';
 import useFetchCountries from '../hooks/use-fetch-countries';
 export default {
   setup() {
     const totalQuestions = 10;
     const optionsChars = { 0: 'A', 1: 'B', 2: 'C', 3: 'D' };
-    // GameState vars
-    const score = ref(0);
-    const currentQuestionIndex = ref(0);
-    const correctAnswerIndex = ref(-1);
-    const selectedAnswerIndex = ref(-1);
-    const completed = ref(0);
-    const buttonsDisabled = ref(false);
-
+    // GameState
     const state = reactive({
-      currentQuestionIndex,
-      correctAnswerIndex,
-      selectedAnswerIndex,
-      buttonsDisabled,
-      completed,
-      score,
+      currentQuestionIndex: 0,
+      correctAnswerIndex: -1,
+      selectedAnswerIndex: -1,
+      buttonsDisabled: false,
+      showResult: false,
+      completed: 0,
+      score: 0,
     });
 
     const {
@@ -181,39 +177,51 @@ export default {
     } = useFetchCountries();
 
     function answerCheck(option, i) {
-      selectedAnswerIndex.value = i;
-      buttonsDisabled.value = true;
+      state.selectedAnswerIndex = i;
+      state.buttonsDisabled = true;
 
-      if (option.correct) score.value = score.value + 1;
-      else completed.value = -1;
+      if (option.correct) state.score = state.score + 1;
+      else {
+        state.completed = -1;
+        state.showResultButton = true;
+      }
 
-      const idx = questions.value[currentQuestionIndex.value].answers.findIndex(
+      const idx = questions.value[state.currentQuestionIndex].answers.findIndex(
         (e) => e.correct === true
       );
 
-      correctAnswerIndex.value = idx;
+      state.correctAnswerIndex = idx;
+      if (state.currentQuestionIndex === totalQuestions - 1) {
+        state.showResultButton = true;
+      }
     }
 
     function nextQuestion() {
-      currentQuestionIndex.value = currentQuestionIndex.value + 1;
-      correctAnswerIndex.value = -1;
-      selectedAnswerIndex.value = -1;
-      if (currentQuestionIndex.value >= totalQuestions) completed.value = 1;
-      buttonsDisabled.value = false;
+      if (state.currentQuestionIndex === totalQuestions - 1) {
+        state.completed = 1;
+        state.showResultButton = true;
+      } else {
+        state.currentQuestionIndex = state.currentQuestionIndex + 1;
+        state.correctAnswerIndex = -1;
+        state.selectedAnswerIndex = -1;
+        state.buttonsDisabled = false;
+      }
     }
 
     function showResult() {
-      completed.value = 1;
+      state.completed = 1;
+      state.showResultButton = false;
     }
 
     function reset() {
       submitted();
-      currentQuestionIndex.value = 0;
-      correctAnswerIndex.value = -1;
-      selectedAnswerIndex.value = -1;
-      completed.value = 0;
-      buttonsDisabled.value = false;
-      score.value = 0;
+      state.currentQuestionIndex = 0;
+      state.correctAnswerIndex = -1;
+      state.selectedAnswerIndex = -1;
+      state.completed = 0;
+      state.buttonsDisabled = false;
+      state.score = 0;
+      state.showResult = false;
     }
 
     onMounted(() => {
