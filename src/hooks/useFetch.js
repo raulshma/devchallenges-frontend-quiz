@@ -5,14 +5,14 @@ export default function (url, options) {
     response: [],
     error: null,
     fetching: false,
+    cache: null,
   });
   const fetchData = async () => {
     state.fetching = true;
     try {
-      const res = await fetch(url, options);
-      const json = await res.json();
+      const data = await makeRequest(url, options);
 
-      const reduced = json.reduce((a, item, i) => {
+      const reduced = data.reduce((a, item, i) => {
         a[i] = {
           name: item.name,
           flag: item.flag,
@@ -30,7 +30,10 @@ export default function (url, options) {
         const [numItem, ans1, ans2, ans3] = getRandomValues(reduced.length, 4);
 
         const item = reduced[numItem];
-
+        if (!item.capital) {
+          i--;
+          continue;
+        }
         const questionType = Math.round(Math.random());
         const questionText =
           questionType === 0
@@ -68,8 +71,6 @@ export default function (url, options) {
         }
       }
 
-      console.log(generatedQuestions);
-
       state.response = generatedQuestions;
     } catch (errors) {
       state.error = errors;
@@ -78,6 +79,23 @@ export default function (url, options) {
     }
   };
   return { ...toRefs(state), fetchData };
+}
+
+async function makeRequest(url, options) {
+  if (localStorage.data) {
+    const { countries, time } = JSON.parse(localStorage.data);
+    const elapsedMilliseconds = Date.now() - time;
+    if (elapsedMilliseconds / 1000 / 60 < 4320) {
+      return countries;
+    }
+  }
+  const res = await fetch(url, options);
+  const json = await res.json();
+  localStorage.data = JSON.stringify({
+    countries: json,
+    time: Date.now(),
+  });
+  return json;
 }
 
 const getRandomValues = (length, n) => {
