@@ -37,7 +37,7 @@ export default function (url, options) {
         const questionType = Math.round(Math.random());
         const questionText =
           questionType === 0
-            ? `'${item.capital}' is the capital of`
+            ? `${item.capital} is the capital of`
             : `Which country does this flag belong to`;
         if (questionKeys.has(item.name) === false) {
           questionKeys.set(item.name);
