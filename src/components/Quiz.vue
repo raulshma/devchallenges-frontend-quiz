@@ -56,7 +56,7 @@
                   >
                     <p class="my-auto ms-2">{{ optionsChars[i] }}</p>
                     <p class="my-auto">
-                      {{ option.name }} {{ ` ${option.correct}` }}
+                      {{ option.name }}
                     </p>
                     <span
                       v-if="state.selectedAnswerIndex !== -1"
