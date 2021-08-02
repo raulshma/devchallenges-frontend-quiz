@@ -13,7 +13,17 @@ import Quiz from './components/Quiz.vue';
 * {
   font-family: 'Poppins', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
-  font-size: 14px;
+  font-size: 10px;
+}
+@media (min-width: 480px) {
+  * {
+    font-size: 11px;
+  }
+}
+@media (min-width: 768px) {
+  * {
+    font-size: 12px;
+  }
 }
 #app {
   height: 100vh;

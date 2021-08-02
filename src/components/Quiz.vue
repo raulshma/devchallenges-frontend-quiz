@@ -4,7 +4,12 @@
       <div class="center-page my-card m-auto m-2">
         <h1 class="dc-heading">COUNTRY QUIZ</h1>
         <div class="card card-width">
-          <div class="card-body p-0">
+          <div
+            class="card-body p-0"
+            :style="
+              state.completed === 1 ? 'display:flex;flex-flow:column' : ''
+            "
+          >
             <img
               src="../assets/undraw_adventure_4hum1.svg"
               class="img-fluid position-absolute dc-banner-image"
@@ -61,7 +66,7 @@
                       state.correctAnswerIndex === i
                         ? 'btn-success'
                         : state.selectedAnswerIndex === i
-                        ? 'btn-danger'
+                        ? 'btn-danger dc-btn-hover-danger'
                         : 'btn-outline-primary'
                     } d-inline-flex shadow-sm hover-orange p-0 dc-answer-btn ${
                       i === 3 && state.buttonsDisabled === false
@@ -167,7 +172,7 @@ export default {
     } = useFetchCountries();
 
     function answerCheck(event, option, i) {
-      console.log(event)
+      console.log(event);
       state.selectedAnswerIndex = i;
       state.buttonsDisabled = true;
 
@@ -240,140 +245,143 @@ export default {
 .dc-heading {
   font-style: normal;
   font-weight: bold;
-  font-size: 36px;
-  line-height: 54px;
+  font-size: 2.5714rem;
+  line-height: 3.8571rem;
   color: #f2f2f2;
   text-transform: uppercase;
 }
 .dc-banner-image {
-  width: 162px;
-  height: 116px;
+  width: 11.5714rem;
+  height: 8.2857rem;
   top: calc(-5rem + 6px);
   right: 0rem;
 }
 .dc-banner-image-result {
-  margin: 49px 113px 72px 113px;
+  margin: 3.5rem auto 5.1429rem auto;
 }
 .dc-flag-img {
-  height: 60px !important;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  border-radius: 12px;
+  height: 4.2857rem !important;
+  margin-top: 0.2857rem;
+  margin-bottom: 0.2857rem;
+  border-radius: 0.8571rem;
 }
 .dc-question-mt {
   margin-top: 4.857rem !important;
 }
 .dc-question {
-  line-height: 36px;
-  font-size: 24px;
+  line-height: 2.5714rem;
+  font-size: 1.7143rem;
   font-weight: 700;
   color: #2f527b;
-  margin-bottom: 32px;
+  margin-bottom: 2.2857rem;
 }
 .dc-answers {
-  gap: 25px;
+  gap: 1.7857rem;
+}
+.dc-btn-hover-danger:hover {
+  background: #dc3545 !important;
 }
 .dc-answer-btn {
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 27px;
+  font-size: 1.2857rem;
+  line-height: 1.9286rem;
   color: #ffffff;
-  border-radius: 12px !important;
+  border-radius: 0.8571rem !important;
   outline: 0 !important;
 }
 .dc-answer-text-span1 {
   padding: 0;
   margin: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-left: 19px;
+  padding-top: 0.7143rem;
+  padding-bottom: 0.7143rem;
+  margin-left: 1.3571rem;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
-  line-height: 36px;
+  font-size: 1.7143rem;
+  line-height: 2.5714rem;
 }
 .dc-answer-text-span2 {
   padding: 0;
   margin: 0;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-left: 46px;
+  padding-top: 1.0714rem;
+  padding-bottom: 1.0714rem;
+  margin-left: 3.2857rem;
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 27px;
+  font-size: 1.2857rem;
+  line-height: 1.9286rem;
   text-align: left;
   word-break: break-all;
 }
 .dc-btn-icon {
-  margin: 19px 17px 18px auto;
-  width: 20px;
-  height: 20px;
+  margin: 1.3571rem 1.2143rem 1.2857rem auto;
+  width: 1.4286rem;
+  height: 1.4286rem;
 }
 .dc-answers-b-m {
-  margin-bottom: 68px;
+  margin-bottom: 4.8571rem;
 }
 .dc-p-left {
   margin-left: 2.286rem;
   margin-right: 2.286rem;
 }
 .dc-btn-next {
-  margin-top: 24px;
-  margin-bottom: 32px;
-  padding: 15px 36px 14px 37px !important;
+  margin-top: 1.7143rem;
+  margin-bottom: 2.2857rem;
+  padding: 1.0714rem 2.5714rem 1rem 2.6429rem !important;
   font-style: normal !important;
   font-weight: bold !important;
-  font-size: 18px !important;
-  line-height: 27px !important;
+  font-size: 1.2857rem !important;
+  line-height: 1.9286rem !important;
   background: #f9a826 !important;
-  box-shadow: 0px 2px 4px rgba(252, 168, 47, 0.4) !important;
-  border-radius: 12px !important;
+  box-shadow: 0rem 0.1429rem 0.2857rem rgba(252, 168, 47, 0.4) !important;
+  border-radius: 0.8571rem !important;
 }
 .dc-result-text {
   margin-bottom: 0;
   font-style: normal;
   font-weight: bold;
-  font-size: 48px;
-  line-height: 72px;
+  font-size: 3.4286rem;
+  line-height: 5.1429rem;
   color: #1d355d;
 }
 .dc-score-text {
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
-  line-height: 27px;
+  font-size: 1.2857rem;
+  line-height: 1.9286rem;
   color: #1d355d;
   margin-bottom: 0;
 }
 .dc-score-num {
   font-style: normal;
   font-weight: bold;
-  font-size: 36px;
-  line-height: 54px;
+  font-size: 2.5714rem;
+  line-height: 3.8571rem;
   color: #1d355d;
   margin-bottom: 0;
 }
 .dc-btn-again {
-  margin-top: 71px;
-  margin-bottom: 33px;
-  padding: 18px 61px 17px 61px !important;
+  margin-top: 5.0714rem;
+  margin-bottom: 2.3571rem;
+  padding: 1.2857rem 4.3571rem 1.2143rem 4.3571rem !important;
   font-style: normal !important;
   font-weight: 600 !important;
-  font-size: 18px !important;
-  line-height: 27px !important;
+  font-size: 1.2857rem !important;
+  line-height: 1.9286rem !important;
   color: #1d355d !important;
   background: #ffff;
-  border: 2px solid #1d355d !important;
+  border: 0.1429rem solid #1d355d !important;
   box-sizing: border-box !important;
-  border-radius: 12px !important;
+  border-radius: 0.8571rem !important;
   transition: all 0.3s ease;
 }
 .dc-btn-again:hover,
 .dc-btn-again:focus {
   color: #fff !important;
   background: #f9a826 !important;
-  border: 2px solid #f9a826 !important;
+  border: 0.1429rem solid #f9a826 !important;
 }
 .center-page {
   place-items: center;
@@ -389,8 +397,8 @@ export default {
   width: 90vw;
 } */
 .card-width {
-  width: 320px;
-  border-radius: 25px !important;
+  width: 22.8571rem;
+  border-radius: 1.7857rem !important;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -401,14 +409,14 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-@media (min-width: 768px) {
-  /* .my-card {
-    width: 40vw;
-  } */
+@media (max-width: 480px) {
   .card-width {
-    width: 464px;
-    /* height: 515px; */
-    /* max-height: 559px; */
+    width: 26.1429rem;
+  }
+}
+@media (min-width: 768px) {
+  .card-width {
+    width: 33.1429rem;
   }
 }
 </style>
