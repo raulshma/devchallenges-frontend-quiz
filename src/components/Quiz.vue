@@ -60,7 +60,7 @@
                   :key="i"
                 >
                   <button
-                    @click="(e) => answerCheck(e, option, i)"
+                    @click="(e) => answerCheck(option, i)"
                     :disabled="state.buttonsDisabled"
                     :class="`btn ${
                       state.correctAnswerIndex === i
@@ -171,8 +171,7 @@ export default {
       fetching,
     } = useFetchCountries();
 
-    function answerCheck(event, option, i) {
-      console.log(event);
+    function answerCheck(option, i) {
       state.selectedAnswerIndex = i;
       state.buttonsDisabled = true;
 
